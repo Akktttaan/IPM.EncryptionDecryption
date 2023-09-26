@@ -4,7 +4,6 @@ public class MonoEncoder : ICryptable
 {
     const string ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
     private const string REVERSE_ALPHABET = "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЁЕДГВБАяюэьыъщшчцхфутсрпонмлкйизжёедгвба";
-    private static Dictionary<char, char> cryptAlphabet;
 
     public string Encrypt(string inputText)
     {

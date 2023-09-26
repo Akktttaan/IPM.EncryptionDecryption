@@ -11,29 +11,12 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Margin="5,57,62,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="DataGrid_SelectionChanged">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="Возраст" Binding="{Binding Age}" />
-            </DataGrid.Columns>
+        <DataGrid Margin="5,57,62,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  SelectionChanged="DataGrid_SelectionChanged" ColumnWidth="88"
+                  x:Name="dataGridFreqDict">
         </DataGrid>
-        <DataGrid Margin="315,57,5,10" Grid.ColumnSpan="2">
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="Возраст" Binding="{Binding Age}" />
-            </DataGrid.Columns>
+        <DataGrid Margin="315,57,5,10" Grid.ColumnSpan="2" ColumnWidth="86"
+                  x:Name="dataGridPrimaryFreqDict">
         </DataGrid>
         <Label Content="Частотный словарь для зашифрованного текста:" HorizontalAlignment="Left" Margin="5,31,0,0" VerticalAlignment="Top"/>
         <Label Content="Частотный словарь для русского языка:" HorizontalAlignment="Left" Margin="315,31,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
