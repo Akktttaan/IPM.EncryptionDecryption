@@ -6,10 +6,10 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using App;
+using App.Encoders;
 using App.Enums;
 using App.Helper;
 using Microsoft.Win32;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Client;
 
@@ -68,7 +68,7 @@ public partial class MainWindow : Window
             string textToSave = ConvertedText.Text;
 
             // Открываем диалоговое окно для выбора места сохранения файла
-            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 
             if (saveFileDialog.ShowDialog() == true)
@@ -220,6 +220,7 @@ public partial class MainWindow : Window
 
     private void ShowGraphics_Click(object sender, RoutedEventArgs e)
     {
-        new Graphics(FrequentCounter.countAppearencesOfLetter(ConvertedText.Text)).Show();
+        new Graphics(FrequentCounter.countAppearencesOfLetter(InitialText.Text),
+            FrequentCounter.countAppearencesOfLetter(ConvertedText.Text)).Show();
     }
 }

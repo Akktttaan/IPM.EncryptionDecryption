@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
-using System.Data;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using App;
 
 namespace Client;
@@ -25,7 +25,7 @@ public partial class FrequentDict : Window
              select new { Номер = i++, Буква = pair.Key, Частота = pair.Value }).ToList();
     }
 
-    private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
 
     }

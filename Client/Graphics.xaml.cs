@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using App;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -24,7 +13,7 @@ namespace Client
     public partial class Graphics : Window
     {
         public SeriesCollection SeriesCollection { get; set; }
-        public Graphics(Dictionary<char, double> encryptArr)
+        public Graphics(Dictionary<char, double> originalArr, Dictionary<char, double> encryptArr)
         {
             InitializeComponent();
 
@@ -33,7 +22,12 @@ namespace Client
                 new LineSeries
                 {
                     Title = "Зашифрованный текст",
-                    Values = new ChartValues<double>(encryptArr.Values.OrderByDescending(x => x).ToArray()),
+                    Values = new ChartValues<double>(encryptArr.Values.OrderByDescending(x => x).ToArray())
+                },
+                 new LineSeries
+                {
+                    Title = "Оригинальный текст",
+                    Values = new ChartValues<double>(originalArr.Values.OrderByDescending(x => x).ToArray())
                 },
                 new LineSeries
                 {
@@ -41,7 +35,6 @@ namespace Client
                     Values = new ChartValues<double>(Constants.PrimaryDict.Values.ToArray())
                 }
             };
-
 
             DataContext = this;
         }

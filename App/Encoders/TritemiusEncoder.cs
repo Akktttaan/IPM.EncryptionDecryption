@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace App;
+namespace App.Encoders;
 
 public class TritemiusEncoder : ICryptable
 {
