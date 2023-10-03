@@ -2,8 +2,12 @@
 
 public class MonoEncoder : ICryptable
 {
-    const string ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-    private const string REVERSE_ALPHABET = "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЁЕДГВБАяюэьыъщшчцхфутсрпонмлкйизжёедгвба";
+    private string RandomAlphabet;
+
+    public MonoEncoder(string key)
+    {
+        RandomAlphabet = key;
+    }
 
     public string Encrypt(string inputText)
     {
@@ -11,8 +15,8 @@ public class MonoEncoder : ICryptable
 
         foreach (var ch in inputText)
         {
-            var index = ALPHABET.IndexOf(ch);
-            outputText += index < 0 ? ch : REVERSE_ALPHABET.ToCharArray()[index];
+            var index = Constants.FullRussianAlphabet.IndexOf(ch);
+            outputText += index < 0 ? ch : RandomAlphabet.ToCharArray()[index];
         }
 
         return outputText;
@@ -24,8 +28,8 @@ public class MonoEncoder : ICryptable
 
         foreach (var ch in inputText)
         {
-            var index = REVERSE_ALPHABET.IndexOf(ch);
-            outputText += index < 0 ? ch : ALPHABET.ToCharArray()[index];
+            var index = RandomAlphabet.IndexOf(ch);
+            outputText += index < 0 ? ch : Constants.FullRussianAlphabet.ToCharArray()[index];
         }
 
         return outputText;

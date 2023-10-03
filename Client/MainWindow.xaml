@@ -7,29 +7,35 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1280">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="35,232,0,0" TextWrapping="Wrap" 
+        <TextBox HorizontalAlignment="Left" Margin="35,232,0,0" TextWrapping="Wrap" AcceptsReturn="True"
                  Text="" VerticalAlignment="Top" Width="590" Height="424" x:Name="InitialText" TextChanged="InitialTextChanged"/>
         <TextBox HorizontalAlignment="Left" Margin="660,232,0,0" TextWrapping="Wrap" 
                  Text="" VerticalAlignment="Top" Width="590" Height="424" x:Name="ConvertedText" IsReadOnly="True"/>
-        <Button Content="Загрузить файл с текстом" HorizontalAlignment="Left" Margin="35,42,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-0.485,-0.059" Height="59" Width="225" Click="LoadTextFromFile" FontSize="19"/>
-        <Button Content="Сохранить текст в файл" HorizontalAlignment="Left" Margin="35,122,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-0.485,-0.059" Height="58" Width="225" Click="SaveTextInFile" FontSize="19"/>
-        <ComboBox HorizontalAlignment="Left" Margin="295,52,0,0" VerticalAlignment="Top" Width="191" Height="38"
+        <Button Content="Загрузить файл с текстом" HorizontalAlignment="Left" Margin="338,201,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-0.485,-0.059" Height="26" Width="208" Click="LoadTextFromFile" FontSize="15"/>
+        <Button Content="Сохранить текст в файл" HorizontalAlignment="Left" Margin="1000,201,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-0.485,-0.059" Height="26" Width="168" Click="SaveTextInFile" FontSize="15">
+        </Button>
+        <ComboBox HorizontalAlignment="Left" Margin="35,48,0,0" VerticalAlignment="Top" Width="191" Height="38"
                   SelectionChanged="EncryptionAlgorithmChanged" x:Name="EncryptionAlgorithms" FontSize="15"/>
-        <Label Content="Алгоритм шифрования:" HorizontalAlignment="Left" Margin="292,14,0,0"
+        <Label Content="Алгоритм шифрования:" HorizontalAlignment="Left" Margin="35,10,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.009,0.113" FontSize="17" Width="194"/>
-        <TextBox HorizontalAlignment="Left" Margin="295,116,0,0" TextWrapping="Wrap" x:Name="EncryptionKey"
-                 Text="" VerticalAlignment="Top" Width="194" Height="24" FontSize="15" TextChanged="EncryptionKeyChanged"/>
-        <Label Content="Ключ шифрования:" HorizontalAlignment="Left" Margin="292,90,0,0"
+        <TextBox HorizontalAlignment="Left" Margin="35,116,0,0" TextWrapping="Wrap" x:Name="EncryptionKey"
+                 Text="" VerticalAlignment="Top" Width="341" Height="24" FontSize="15" TextChanged="EncryptionKeyChanged"/>
+        <Label Content="Ключ шифрования:" HorizontalAlignment="Left" Margin="35,86,0,0"
                VerticalAlignment="Top" Width="194" FontSize="15"/>
-        <Button Content="Зашифровать" x:Name="EncryptButton" HorizontalAlignment="Left" Margin="517,53,0,0" VerticalAlignment="Top"
-                RenderTransformOrigin="-0.065,-0.357" Height="37" Width="167" FontSize="16" Click="Encrypt" IsEnabled="false"/>
-        <Button Content="Расшифровать" x:Name="DecryptButton" HorizontalAlignment="Left" Margin="517,103,0,0" VerticalAlignment="Top"
-                RenderTransformOrigin="-0.065,-0.357" Height="37" Width="167" FontSize="16" Click="Decrypt" IsEnabled="false"/>
+        <Button Content="Зашифровать" x:Name="EncryptButton" HorizontalAlignment="Left" Margin="200,201,0,0" VerticalAlignment="Top"
+                RenderTransformOrigin="-0.065,-0.357" Height="26" Width="133" FontSize="16" Click="Encrypt" IsEnabled="false"/>
+        <Button Content="Расшифровать" x:Name="DecryptButton" HorizontalAlignment="Left" Margin="863,201,0,0" VerticalAlignment="Top"
+                RenderTransformOrigin="-0.065,-0.357" Height="26" Width="132" FontSize="16" Click="Decrypt" IsEnabled="false"/>
         <Label Content="Исходный текст:" HorizontalAlignment="Left" Margin="35,201,0,0" VerticalAlignment="Top" Width="203" FontSize="15"/>
         <Label Content="Преобразованный текст:" HorizontalAlignment="Left" Margin="660,201,0,0" VerticalAlignment="Top" Width="203" FontSize="15"/>
         <Button Content="        Показать&#xD;&#xA;частотный словарь" HorizontalAlignment="Left"
-                Margin="1087,56,0,0" VerticalAlignment="Top" Height="45" Width="163" FontSize="15" Click="ShowFrequencyDictionary"/>
+                Margin="908,48,0,0" VerticalAlignment="Top" Height="42" Width="158" FontSize="15" Click="ShowFrequencyDictionary"/>
+        <Button x:Name="GenerationButton" Content="Сгенерировать" HorizontalAlignment="Left" 
+                Margin="36,158,0,0" VerticalAlignment="Top" Width="100" Click="GenerationKeyBtnClick" IsEnabled="False"/>
+        <Button x:Name="CopyInitialText" Content="Copy" HorizontalAlignment="Left" Margin="575,201,0,0" VerticalAlignment="Top" Height="26" Width="50" FontSize="15" Click="CopyInitialText_Click"/>
+        <Button x:Name="CopyConvertedText" Content="Copy" HorizontalAlignment="Left" Margin="1200,201,0,0" VerticalAlignment="Top" Height="26" Width="50" FontSize="15" Click="CopyConvertedText_Click"/>
+        <Button x:Name="ShowGraphics" Content="Показать графики" HorizontalAlignment="Left" Margin="1084,48,0,0" VerticalAlignment="Top" Height="42" Width="166" FontSize="15" Click="ShowGraphics_Click"/>
     </Grid>
 </Window>

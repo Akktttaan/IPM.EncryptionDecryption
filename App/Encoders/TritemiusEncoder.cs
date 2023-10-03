@@ -1,61 +1,34 @@
-﻿namespace App;
+﻿using System.Text;
+
+namespace App;
 
 public class TritemiusEncoder : ICryptable
 {
-    private string _cryptWord;
-    const string ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+    private readonly string _key;
 
     public TritemiusEncoder(string key)
-    {
-        if (key == string.Empty) _cryptWord = "тритемиус";
-        else _cryptWord = key;
-    }
+        => _key = string.IsNullOrEmpty(key) ? "ключ" : key;
 
-    public string Encrypt(string inputText)
-    {
-        var outputText = string.Empty;
-        var fullAlphabet = ALPHABET + ALPHABET.ToLower();
-        var fullAlphabetLength = fullAlphabet.Length;
+    public string Encrypt(string text) => Encode(text, (index, keyIndex) =>
+    ((index + keyIndex) + Constants.RussianAlphabetUpperCase.Length) % Constants.RussianAlphabetUpperCase.Length);
 
-        for (int i = 0; i < inputText.Length; i++)
+    public string Decrypt(string text) => Encode(text, (index, keyIndex) =>
+    ((index - keyIndex) + Constants.RussianAlphabetUpperCase.Length) % Constants.RussianAlphabetUpperCase.Length);
+
+
+
+    private string Encode(string text, Func<int, int, int> operation)
+    {
+        var sb = new StringBuilder();
+        var fullAlphabet = Constants.RussianAlphabetUpperCase.ToLower();
+        for (int i = 0; i < text.Length; i++)
         {
-            var ch = inputText[i];
+            var ch = text[i];
             var index = fullAlphabet.IndexOf(ch);
-            if (index < 0)
-            {
-                outputText += ch;
-            }
-            else
-            {
-                var charInKey = _cryptWord[i % _cryptWord.Length];
-                outputText += fullAlphabet[(index + fullAlphabet.IndexOf(charInKey)) % fullAlphabetLength];
-            }
+            var kI = fullAlphabet.IndexOf(_key[i % _key.Length]);
+            sb.Append(index < 0 ? ch : fullAlphabet[operation(index, kI)]);
         }
 
-        return outputText;
-    }
-
-    public string Decrypt(string inputText)
-    {
-        var outputText = string.Empty;
-        var fullAlphabet = ALPHABET + ALPHABET.ToLower();
-        var fullAlphabetLength = fullAlphabet.Length;
-
-        for (int i = 0; i < inputText.Length; i++)
-        {
-            var ch = inputText[i];
-            var index = fullAlphabet.IndexOf(ch);
-            if (index < 0)
-            {
-                outputText += ch;
-            }
-            else
-            {
-                var charInKey = _cryptWord[i % _cryptWord.Length];
-                outputText += fullAlphabet[(index + fullAlphabetLength) - fullAlphabet.IndexOf(charInKey)];
-            }
-        }
-
-        return outputText;
+        return sb.ToString();
     }
 }

@@ -9,6 +9,7 @@ using App;
 using App.Enums;
 using App.Helper;
 using Microsoft.Win32;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Client;
 
@@ -17,6 +18,8 @@ namespace Client;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private string RandomAlphabet { get; set; }
+
     public MainWindow()
     {
         InitializeComponent();
@@ -87,7 +90,10 @@ public partial class MainWindow : Window
 
     private void EncryptionAlgorithmChanged(object sender, SelectionChangedEventArgs e)
     {
-        EncryptionKey.IsEnabled = EncryptionAlgorithms.SelectedItem != "Моно алфавитная подстановка";
+        var selectedMonoAlphabetState = EncryptionAlgorithms.SelectedItem.ToString() == "Моно алфавитная подстановка";
+        EncryptionKey.IsEnabled = !selectedMonoAlphabetState;
+        GenerationButton.IsEnabled = selectedMonoAlphabetState;
+        EncryptionKey.IsEnabled = !selectedMonoAlphabetState;
         EncryptionKey.Text = string.Empty;
         ValidateEncryptButtons();
     }
@@ -102,7 +108,7 @@ public partial class MainWindow : Window
         ICryptable encoder =
             EnumHelper.GetValue<EncryptionAlgorithmType>(EncryptionAlgorithms.SelectedItem.ToString()) switch
             {
-                EncryptionAlgorithmType.Mono => new MonoEncoder(),
+                EncryptionAlgorithmType.Mono => new MonoEncoder(RandomAlphabet),
                 EncryptionAlgorithmType.Caesar => new CaesarEncoder(EncryptionKey.Text),
                 EncryptionAlgorithmType.Tritemius => new TritemiusEncoder(EncryptionKey.Text),
                 _ => throw new ArgumentOutOfRangeException()
@@ -115,7 +121,7 @@ public partial class MainWindow : Window
         ICryptable encoder =
             EnumHelper.GetValue<EncryptionAlgorithmType>(EncryptionAlgorithms.SelectedItem.ToString()) switch
             {
-                EncryptionAlgorithmType.Mono => new MonoEncoder(),
+                EncryptionAlgorithmType.Mono => new MonoEncoder(RandomAlphabet),
                 EncryptionAlgorithmType.Caesar => new CaesarEncoder(EncryptionKey.Text),
                 EncryptionAlgorithmType.Tritemius => new TritemiusEncoder(EncryptionKey.Text),
                 _ => throw new ArgumentOutOfRangeException()
@@ -159,7 +165,61 @@ public partial class MainWindow : Window
     {
         var textLengthState = InitialText.Text.Length > 0;
         var keyState = EncryptionKey.Text.Length > 0;
-        EncryptButton.IsEnabled = textLengthState && keyState;
-        DecryptButton.IsEnabled = textLengthState && keyState;
+        var algorithmSelectedState = EncryptionAlgorithms.SelectedItem != null;
+        EncryptButton.IsEnabled = textLengthState && keyState && algorithmSelectedState;
+        DecryptButton.IsEnabled = textLengthState && keyState && algorithmSelectedState;
+    }
+
+    private void GenerationKeyBtnClick(object sender, RoutedEventArgs e)
+    {
+        RandomAlphabet = GenerateRandomUniqueRussianAlphabet();
+        EncryptionKey.Text = RandomAlphabet;
+    }
+
+    private void CopyInitialText_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var text = InitialText.Text;
+            Clipboard.SetDataObject(text);
+            MessageBox.Show("Текст успешно скопирован в буфер обмена.");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Произошла ошибка при копировании текста: {ex.Message}");
+        }
+    }
+
+    private void CopyConvertedText_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var text = ConvertedText.Text;
+            Clipboard.SetDataObject(text);
+            MessageBox.Show("Текст успешно скопирован в буфер обмена.");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Произошла ошибка при копировании текста: {ex.Message}");
+        }
+    }
+
+    public static string GenerateRandomUniqueRussianAlphabet()
+    {
+        // Создаем генератор случайных чисел
+        Random random = new Random();
+
+        // Используем LINQ для перемешивания символов в массиве
+        char[] shuffledAlphabet = Constants.FullRussianAlphabet.OrderBy(x => random.Next()).ToArray();
+
+        // Преобразуем перемешанный массив в строку
+        string shuffledAlphabetString = new string(shuffledAlphabet);
+
+        return shuffledAlphabetString;
+    }
+
+    private void ShowGraphics_Click(object sender, RoutedEventArgs e)
+    {
+        new Graphics(FrequentCounter.countAppearencesOfLetter(ConvertedText.Text)).Show();
     }
 }

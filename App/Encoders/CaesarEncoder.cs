@@ -3,8 +3,6 @@
 public class CaesarEncoder : ICryptable
 {
     private int cryptKey;
-    const string ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-
     public CaesarEncoder(string cryptKey = "1")
     {
         this.cryptKey = int.Parse(cryptKey);
@@ -13,7 +11,7 @@ public class CaesarEncoder : ICryptable
     public string Encrypt(string inputText)
     {
         var outputText = string.Empty;
-        var fullAlphabet = ALPHABET + ALPHABET.ToLower();
+        var fullAlphabet = Constants.RussianAlphabetUpperCase + Constants.RussianAlphabetUpperCase.ToLower();
         var fullAlphabetLength = fullAlphabet.Length;
 
         foreach (var ch in inputText)
@@ -35,7 +33,7 @@ public class CaesarEncoder : ICryptable
     public string Decrypt(string inputText)
     {
         var outputText = string.Empty;
-        var fullAlphabet = ALPHABET + ALPHABET.ToLower();
+        var fullAlphabet = Constants.RussianAlphabetUpperCase + Constants.RussianAlphabetUpperCase.ToLower();
         var fullAlphabetLength = fullAlphabet.Length;
 
         foreach (var ch in inputText)
